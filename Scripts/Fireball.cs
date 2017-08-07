@@ -6,15 +6,21 @@ public class Fireball : MonoBehaviour {
 
     public GameObject Explosion;
     public WarlockJ player;
+    private CapsuleCollider2D collider;
+    private float timer = .1f;
 
 	// Use this for initialization
 	void Start () {
-
+        collider = GetComponent<CapsuleCollider2D>();
+        collider.enabled = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        timer -= Time.deltaTime;
+        if (timer <= 0) {
+            collider.enabled = true;
+        }
 	}
 
     void OnTriggerEnter2D(Collider2D collision) {
@@ -24,10 +30,10 @@ public class Fireball : MonoBehaviour {
             GameObject p = collision.gameObject;
             player = p.GetComponent<WarlockJ>();
             player.updateHealth(10f);
+            player.hit();
             Destroy(this.gameObject);
 
             //Push the player
-
             var magnitude = 300;
             var force = transform.position - collision.transform.position;
             force = -force.normalized;

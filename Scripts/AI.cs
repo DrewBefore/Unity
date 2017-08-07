@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// AI is an artifical Warlock. Will move left and right and shoot fireballs straight down.
 public class AI : WarlockJ {
     private CapsuleCollider2D myCollider;
 
@@ -15,18 +16,20 @@ public class AI : WarlockJ {
         xmax = rightmost.x - padding;
     }
 
-    [Command]
-    protected override void Cmdfire() {
+    //[Command]
+    void Cmdfire2() {
         Vector3 location = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
         GameObject beam = Instantiate(Projectile, location, Quaternion.identity) as GameObject;
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, -projectileSpeed, 0);
     }
 
+    
     // Update is called once per frame
-    void Update() {
+    protected override void Update() {
+        //Cmdfire();
         float value = Random.value;
         if (value < .07 && value > .06) {
-            Cmdfire();
+            Cmdfire2();
         }
         if (value < .5) {
             transform.position += Vector3.left * speed * Time.deltaTime;
@@ -38,8 +41,8 @@ public class AI : WarlockJ {
         float newX = Mathf.Clamp(transform.position.x, xmin, xmax);
         transform.position = new Vector3(newX, transform.position.y, transform.position.z);
     }
+    
+    //protected override void FixedUpdate() {
 
-    protected override void FixedUpdate() {
-
-    }
+    //}
 }

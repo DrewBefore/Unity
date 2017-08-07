@@ -16,7 +16,6 @@ public class Player : MonoBehaviour {
 
     float fireCooldown = .5f;
     float fireCooldownLeft = 0;
-
 	// Use this for initialization
 	void Start () {
         float distance = transform.position.z - Camera.main.transform.position.z;
